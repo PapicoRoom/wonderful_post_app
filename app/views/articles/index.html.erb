@@ -1,11 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Articles</h1>
+<h1>投稿一覧</h1>
+<%=@details%>
+
 
 <table>
   <thead>
     <tr>
-      <th>Writer</th>
       <th>Title</th>
       <th>Content</th>
       <th colspan="3"></th>
@@ -15,7 +17,6 @@
   <tbody>
     <% @articles.each do |article| %>
       <tr>
-        <td><%= article.writer %></td>
         <td><%= article.title %></td>
         <td><%= article.content %></td>
         <td><%= link_to 'Show', article %></td>
