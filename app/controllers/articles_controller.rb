@@ -4,7 +4,6 @@ class ArticlesController < ApplicationController
   # GET /articles or /articles.json
   def index
     @articles = Article.all
-    @details = "詳細"
   end
 
   # GET /articles/1 or /articles/1.json
@@ -22,40 +21,27 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-    @article = Article.new(article_params)
-
-    respond_to do |format|
+      @article = Article.new(article_params)
       if @article.save
-        format.html { redirect_to article_url(@article), notice: "Article was successfully created." }
-        format.json { render :show, status: :created, location: @article }
+        redirect_to @article, notice: "新しい記事を投稿しました。"
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
-    respond_to do |format|
       if @article.update(article_params)
-        format.html { redirect_to article_url(@article), notice: "Article was successfully updated." }
-        format.json { render :show, status: :ok, location: @article }
+        redirect_to @article, notice: "記事を更新しました。"
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity
       end
-    end
   end
 
   # DELETE /articles/1 or /articles/1.json
   def destroy
     @article.destroy
-
-    respond_to do |format|
-      format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to articles_url, notice: "記事を削除しました。"
   end
 
   private
