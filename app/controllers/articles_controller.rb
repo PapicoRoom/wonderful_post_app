@@ -1,9 +1,10 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[ show edit update destroy ]
+  before_action :set_article, only: %i[ edit update destroy ]
 
   # GET /articles or /articles.json
   def index
     @articles = Article.all
+    flash[:notice] = "ログイン済ユーザーのみ記事の詳細を確認できます" unless user_signed_in?
   end
 
   # GET /articles/1 or /articles/1.json
@@ -13,6 +14,7 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   def new
     @article = Article.new
+    @article= current_user.articles.build
   end
 
   # GET /articles/1/edit
