@@ -1,20 +1,22 @@
 class ArticlesController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[ index show ]
   before_action :set_article, only: %i[ edit update destroy ]
 
   # GET /articles or /articles.json
   def index
     @articles = Article.all
-    flash[:notice] = "ログイン済ユーザーのみ記事の詳細を確認できます" unless user_signed_in?
   end
 
   # GET /articles/1 or /articles/1.json
   def show
+    @article = Article.find(params[:id])
   end
 
   # GET /articles/new
   def new
     @article = Article.new
-    @article= current_user.articles.build
+
+    # @article= current_user.articles.build
   end
 
   # GET /articles/1/edit
@@ -23,7 +25,9 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-      @article = Article.new(article_params)
+      @article = current_user.articles.new(article_params)
+
+
       if @article.save
         redirect_to @article, notice: "新しい記事を投稿しました。"
       else
@@ -49,7 +53,7 @@ class ArticlesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.find(params[:id])
+      @article = current_user.articles.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
