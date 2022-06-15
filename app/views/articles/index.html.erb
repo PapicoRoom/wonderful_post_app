@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 
-<h1>Articles</h1>
+<h1>記事一覧</h1>
 
-<% if user_signed_in? %>
-  <%= link_to '新規投稿', new_article_path(@article), class: "btn btn-dark"  %>
-<% end %>
+<%= render partial: "search" %>
+<%= paginate @articles %>
+
 
 <table class="table">
   <thead>

@@ -2,12 +2,19 @@ class ArticlesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[ index show ]
   before_action :set_article, only: %i[ edit update destroy ]
 
+
+
   # GET /articles or /articles.json
+
+  binding.pry
   def index
-    @articles = Article.all
+    articles = Article.all
+    articles = articles.where("title LIKE ?", "%#{params[:title]}%") if params[:title].present?
+    @articles = articles.page params[:page]
   end
 
   # GET /articles/1 or /articles/1.json
+
   def show
     @article = Article.find(params[:id])
   end
