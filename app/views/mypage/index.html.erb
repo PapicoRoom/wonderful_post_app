@@ -1,12 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 
-<h1>記事一覧</h1>
-
+<h1>マイページ</h1>
 <%= render partial: "search" %>
-<%= paginate @articles %>
-
-
+<%= link_to '新規投稿', new_article_path, class: "btn btn-dark"  %>
 <table class="table">
   <thead>
     <tr>
@@ -14,6 +11,7 @@
       <th scope="col">本文</th>
     </tr>
   </thead>
+
 
   <tbody>
     <% @articles.each do |article| %>
@@ -26,11 +24,12 @@
         </td>
 
         <td><%= article.content %></td>
-        <td>
-            <%= link_to '詳細', article, class: "btn btn-success"  %>
-
-        </td>
+        <td><%= link_to '詳細', article, class: "btn btn-success" %></td>
+        <td><%= link_to '編集', edit_article_path(article), class: "btn btn-warning" %></td>
+        <td><%= link_to '削除', article, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<br>
