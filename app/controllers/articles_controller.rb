@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
 
-  binding.pry
+
   def index
     articles = Article.all
     articles = articles.where("title LIKE ?", "%#{params[:title]}%") if params[:title].present?
