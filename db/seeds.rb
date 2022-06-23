@@ -21,6 +21,10 @@
 
 require "pry"
 
+ tags = %w(学習 豆知識 その他)
+ tags.each { |tag| Tag.find_or_create_by!(name: tag) }
+
+
 3.times do |n|
    n += 1
   #  binding.pry
@@ -34,6 +38,7 @@ require "pry"
     num += 1
     user.articles.find_or_create_by!(title: "No.#{num}: user00#{n}の記事") do |article|
      article.content = "No.#{num}: user00#{n}の記事の本文"
+     article.tag_ids = Tag.all.pluck(:id)
    end
   end
 end
